@@ -21,11 +21,11 @@ public class Main {
         printMatrix(matrixB);
 
 
-//        System.out.println("The resulting matrix using Classic Matrix Multiplication is:");
-//        printMatrix(matrixClassic);
+        System.out.println("The resulting matrix using Classic Matrix Multiplication is:");
+        printMatrix(matrixClassic);
 
-//        System.out.println("The resulting matrix using Divide And Conquer Matrix Multiplication is:");
-//        printMatrix(matrixDNC);
+        System.out.println("The resulting matrix using Divide And Conquer Matrix Multiplication is:");
+        printMatrix(matrixDNC);
 
         System.out.println("The resulting matrix using Strassen's Matrix Multiplication is:");
         printMatrix(matrixStrass);
