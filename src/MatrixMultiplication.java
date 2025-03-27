@@ -1,14 +1,23 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Random;
 import java.util.Scanner;
 
-public class Main {
+public class MatrixMultiplication {
     public static void main(String[] args) {
+        //read from the input matrix files
         int[][] matrixA = readFromMatrixFile("./testCases/test10A.txt");
         int[][] matrixB = readFromMatrixFile("./testCases/test10B.txt");
 
+        //generate matrices with size n x n and save to file
+        generateMatrixAndSave(2, "./testCases/testAN2");
+        generateMatrixAndSave(2, "./testCases/testBN2");
+
         int n = matrixA.length;
 
+        //perform algorithms
         int[][] matrixClassic = classicMatrixMultiplication(matrixA, matrixB, n);
         int[][] matrixDNC = divideAndConquer(matrixA, matrixB, n);
         int[][] matrixStrass = strassenAlgo(matrixA, matrixB, n);
@@ -20,7 +29,7 @@ public class Main {
         System.out.println("Matrix B:");
         printMatrix(matrixB);
 
-
+        //resulting matrices for each algorithm
         System.out.println("The resulting matrix using Classic Matrix Multiplication is:");
         printMatrix(matrixClassic);
 
@@ -29,6 +38,52 @@ public class Main {
 
         System.out.println("The resulting matrix using Strassen's Matrix Multiplication is:");
         printMatrix(matrixStrass);
+
+        int[][] matrixAN = readFromMatrixFile("./testCases/testAN2");
+        int[][] matrixBN = readFromMatrixFile("./testCases/testBN2");
+
+        int nPart3 = matrixAN.length;
+
+
+        System.out.println("\nNow we are testing the time complexity for each algorithm..");
+
+        long startTimeClassic = System.nanoTime();
+        classicMatrixMultiplication(matrixAN, matrixBN, nPart3);
+        long endTimeClassic = System.nanoTime();
+        long runTimeClassic = endTimeClassic - startTimeClassic;
+        System.out.println("The runtime duration for the Classic algorithm is: " + runTimeClassic + " nanoseconds");
+
+        long startTimeDNC = System.nanoTime();
+        divideAndConquer(matrixAN, matrixBN, nPart3);
+        long endTimeDNC = System.nanoTime();
+        long runTimeDNC = endTimeDNC - startTimeDNC;
+        System.out.println("The runtime duration for the Divide and Conquer algorithm is: " + runTimeDNC + " nanoseconds");
+
+        long startTimeStrassen = System.nanoTime();
+        divideAndConquer(matrixAN, matrixBN, nPart3);
+        long endTimeStrassen = System.nanoTime();
+        long runTimeStrassen = endTimeStrassen - startTimeStrassen;
+        System.out.println("The runtime duration for Strassen's algorithm is: " + runTimeStrassen + " nanoseconds");
+
+        System.out.println(runTimeClassic + " nanoseconds");
+        System.out.println(runTimeDNC + " nanoseconds");
+        System.out.println(runTimeStrassen + " nanoseconds");
+
+    }
+
+    public static void generateMatrixAndSave(int n, String fileName){
+        Random rand = new Random();
+        try (PrintWriter writer = new PrintWriter(new File(fileName))) {
+            writer.println(n);
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    writer.print(rand.nextInt(10) + " "); // Random values 0-9
+                }
+                writer.println();
+            }
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + fileName);
+        }
     }
 
     public static int[][] strassenAlgo(int[][] matrixA, int[][]matrixB, int n){
