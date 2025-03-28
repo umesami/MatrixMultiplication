@@ -12,8 +12,8 @@ public class MatrixMultiplication {
         int[][] matrixB = readFromMatrixFile("./testCases/test10B.txt");
 
         //generate matrices with size n x n and save to file
-        generateMatrixAndSave(2, "./testCases/testAN2");
-        generateMatrixAndSave(2, "./testCases/testBN2");
+        generateMatrixAndSave(64, "./testCases/testAN2");
+        generateMatrixAndSave(64, "./testCases/testBN2");
 
         int n = matrixA.length;
 
@@ -51,19 +51,19 @@ public class MatrixMultiplication {
         classicMatrixMultiplication(matrixAN, matrixBN, nPart3);
         long endTimeClassic = System.nanoTime();
         long runTimeClassic = endTimeClassic - startTimeClassic;
-        System.out.println("The runtime duration for the Classic algorithm is: " + runTimeClassic + " nanoseconds");
+        System.out.println("The runtime duration for the Classic algorithm is: " + Math.pow(10, -9)*runTimeClassic + " seconds");
 
         long startTimeDNC = System.nanoTime();
         divideAndConquer(matrixAN, matrixBN, nPart3);
         long endTimeDNC = System.nanoTime();
         long runTimeDNC = endTimeDNC - startTimeDNC;
-        System.out.println("The runtime duration for the Divide and Conquer algorithm is: " + runTimeDNC + " nanoseconds");
+        System.out.println("The runtime duration for the Divide and Conquer algorithm is: " + Math.pow(10, -9)*runTimeDNC + " seconds");
 
         long startTimeStrassen = System.nanoTime();
         divideAndConquer(matrixAN, matrixBN, nPart3);
         long endTimeStrassen = System.nanoTime();
         long runTimeStrassen = endTimeStrassen - startTimeStrassen;
-        System.out.println("The runtime duration for Strassen's algorithm is: " + runTimeStrassen + " nanoseconds");
+        System.out.println("The runtime duration for Strassen's algorithm is: " + Math.pow(10, -9)*runTimeStrassen + " seconds");
 
         System.out.println(runTimeClassic + " nanoseconds");
         System.out.println(runTimeDNC + " nanoseconds");
